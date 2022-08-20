@@ -1,0 +1,18 @@
+import React from 'react';
+import { Image, Text, View, TextInput, StyleSheet } from 'react-native';
+import { useState, useEffect} from "react"
+import Login from './Login';
+import SignUp from './SignUp';
+
+function LoginSignup() {
+   const [isLogIn, setIsLogIn] = useState(true)
+
+   return (
+    <>{isSignIn ? <Login setIsLogIn={setIsLogIn}/> : <SignUp />}</>
+    
+   )
+
+
+}
+
+export default LoginSignup;
