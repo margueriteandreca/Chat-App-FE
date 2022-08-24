@@ -4,15 +4,56 @@ import { TouchableOpacity } from "react-native";
 import { View, Text, Image, StyleSheet } from "react-native"
 
 
-function ChatListItem() {
+function ChatListItem({chat, contact, user}) {
+    // const name = chat.users(user => `${user.first_name} ${user.last_name}`)
 
+    const subtitle = () => {
+        if (contact) {
+            
+        }
+        if (chat) {
+            return `${chat.last_message.message_content}`
+        }
+        if (user) {
+            return `${user.status}`
+        }
+    }
+
+    const name = () => {
+        if (contact) {
+            return `${contact.first_name} ${contact.last_name}`
+        }
+        if (chat) {
+            return `${chat.name}`
+        }
+        if (user)
+             return `${contact.first_name} ${contact.last_name}`
+    }
+
+    const badge = () => {
+        if (contact) {
+            return null
+        }
+        if (chat) {
+            return (
+                <View style={ChatListStyle.badge}>
+                <Text style={ChatListStyle.badgeText}>2</Text>
+                </View>
+            )
+        }
+    }
     return (
-        <TouchableOpacity style={ChatListStyle}>
-            <Image source={{uri: "https://media.istockphoto.com/photos/close-up-portrait-of-a-shiba-inu-dog-selective-focus-dog-nose-picture-id1391025385?k=20&m=1391025385&s=612x612&w=0&h=G22D7kWgVGCOn-wv0-tJAxoI5bylZSXIOhslCaYiiVQ="}} style={{height: 30, width: 30, borderRadius: 100}}/>
+        <TouchableOpacity style={ChatListStyle.container}>
+            <Image source={{uri: "https://media.istockphoto.com/photos/close-up-portrait-of-a-shiba-inu-dog-selective-focus-dog-nose-picture-id1391025385?k=20&m=1391025385&s=612x612&w=0&h=G22D7kWgVGCOn-wv0-tJAxoI5bylZSXIOhslCaYiiVQ="}} style={{height: 40, width: 40, borderRadius: 100}}/>
             <View style={{paddingLeft: 10}}>
-            <Text>Alan</Text>
-            <Text>This will be conditionally rendered </Text>
+            <Text>{name()}</Text>
+            <Text numberOfLines={1}>
+                {subtitle()} 
+            </Text>
             </View>
+            {badge()}
+
+            
         </TouchableOpacity>
 
 
@@ -20,14 +61,33 @@ function ChatListItem() {
 }
 
 const ChatListStyle = StyleSheet.create({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flexStart",
-    paddingLeft: 10,
-    height: 70,
-    width: "100%",
-    backgroundColor: "grey"
+    container: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flexStart",
+        paddingLeft: 10,
+        height: 70,
+        width: "100%",
+        backgroundColor: "white",
+        borderBottomColor: '#bfbfbf',
+        borderBottomWidth: 1
+    },
+    badge: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#3872E9",
+        width: 25,
+        height: 25,
+        borderRadius: 50,
+        position: "absolute",
+        right: 20
+
+    },
+    badgeText: {
+        color: "white"
+    }
 
 })
 

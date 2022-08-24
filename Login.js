@@ -2,19 +2,23 @@ import React from 'react';
 import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState, useEffect} from "react"
 
-function Login({setIsLogIn}) {
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+function Login({handleLogin, setIsLogIn, username, setUser, setUsername, password, setPassword, token, setToken}) {
+
+
+    const handleOpenSignUp = () => {
+        setIsLogIn(false)
+    }
 
     return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Log In To ShibaTalk</Text>
+      <Text>Log In To Vorba</Text>
       
       <TextInput
         style={styles.input}
         onChangeText={setUsername}
         value={username}
-        placeholder="user name"
+        placeholder="username"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
@@ -25,17 +29,17 @@ function Login({setIsLogIn}) {
       />
       <TouchableOpacity
           style={styles.loginButton}
-          onPress={() => {}}
+          onPress={handleLogin}
           underlayColor='#fff'>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        <Text>Don't have an account?</Text>
+        <View style={styles.signUpButtonContainer}><Text>Don't have an account?</Text>
         <TouchableOpacity
-          style={styles.clickToSignUp}
-          onPress={() => {}}
+          onPress={handleOpenSignUp}
           underlayColor='#fff'>
-          <Text style={styles.clickToSignUp}>Login</Text>
+          <Text style={styles.clickToSignUp}>Sign up</Text>
         </TouchableOpacity>
+        </View>
     </View>
     )
 
@@ -54,10 +58,24 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "skyblue",
+        backgroundColor: "#3777f0",
         width: 180,
-        height: 30,
+        height: 40,
         borderRadius: 5
+
+    },
+    loginText: {
+        color: "white"
+    },
+    signUpButtonContainer: {
+        marginTop: 10,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+
+    },
+    clickToSignUp: {
+        color: "#3777f0"
 
     }
   });
