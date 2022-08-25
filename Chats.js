@@ -6,18 +6,6 @@ import ChatListItem from "./ChatListItem";
 import ChatRoom from "./ChatRoom";
 import FilterChats from "./FilterChats";
 
-import {
-  ActionCable,
-  Cable,
-} from '@kesha-antonov/react-native-action-cable'
-
-
-const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
-
-console.log('!!! cable', actionCable);
-
-const cable = new Cable({})
-
 function Chats({user, token}) {
     const [search, setSearch] = useState("")
     const [chats, setChats] = useState([])

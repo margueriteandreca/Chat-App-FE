@@ -33,7 +33,7 @@ function Contacts({token}) {
 
     return (
       <View style={{ flex: 1, justifyContent: 'flexStart', alignItems: 'center' }}>
-        {contacts.map(contact => <ChatListItem contact={contact} onPress={createNewConversation}/>)}
+        {contacts.map(contact => <ChatListItem key={contact.id} contact={contact} onPress={createNewConversation}/>)}
       </View>
     );
   }
