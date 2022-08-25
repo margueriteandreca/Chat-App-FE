@@ -4,31 +4,37 @@ import ChatListItem from "./ChatListItem";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
 
-function Settings({user}) {
-    const [isEditProfile, setIsEditProfile] = useState(true)
+function Settings({user, setUser, token, setToken}) {
+    const [isEditProfile, setIsEditProfile] = useState(false)
 
     const handleOpenEditBio = () => {
         setIsEditProfile(true)
     }
 
+    const handleLogout = () => {
+        setUser(null)
+        setToken(null)
+
+    }
+
     return (
       <View style={{ flex: 1, justifyContent: "flex-start", alignItems: 'center' }}>
-        <ChatListItem user={user} onPress={handleOpenEditBio} />
+        <ChatListItem user={user} handleOpenEditBio={handleOpenEditBio} />
         
-        <TouchableOpacity style={styles.clearChatContainer} onPress={() => {}}>
+        <TouchableOpacity style={styles.clearChatContainer} onPress={handleLogout}>
             <Text style={styles.clearChatText}>
                 Clear All Chats 
             </Text>
         </TouchableOpacity>
         
         
-        <TouchableOpacity style={styles.logContainer} onPress={() => {}}>
+        <TouchableOpacity style={styles.logContainer} onPress={handleLogout}>
             <Text style={styles.logoutText}>
                 Logout
             </Text>
         </TouchableOpacity>
 
-        {isEditProfile ? <EditProfile /> : null}
+        {isEditProfile ? <EditProfile user={user}/> : null}
 
         
       </View>

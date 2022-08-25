@@ -4,28 +4,22 @@ import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'reac
 import ChatListItem from './ChatListItem';
 
 function EditProfile({user}) {
+    const [status, setStatus] = useState("")
 
-    // useEffect(() => {
-    //     fetch("http://localhost:3000/myprofile", 
-    //         {
-    //           headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //           },
-    //           method: "POST",
-    //           body: JSON.stringify({token})
-    //       }) 
-    //         .then(res => res.json())
-    //         .then(data => {
-    //           console.log(data)
-    //           setUser(data)
-    //           setToken(token);
-    //         })
-    //         setIsLoggedIn(true)
-          
-    //   }, [])
-    
-    console.log(user)
+    const handleEditStatus = () => {
+        fetch(`http://localhost:3000/users/${user.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accepts": "appliation/json"
+            },
+            body: JSON.stringify({status: status})
+        })
+        .then(res => res.json())
+        .then(data => console.log("STATUS UPDATE", data))
+      }
+
+      console.log("status????????", status)
 
     return (
         <View style={profileStyles.profileContainer}>
@@ -33,8 +27,16 @@ function EditProfile({user}) {
         <ChatListItem user={user}/>
 
         <View style={profileStyles.statusContainer}>
-        <Text style={profileStyles.inputlabel}>Edit Status</Text>
-        <TextInput style={profileStyles.input}></TextInput>
+            <Text style={profileStyles.inputlabel}>
+            Edit Status
+            </Text>
+        <TextInput 
+        style={profileStyles.input}
+        onChangeText={setStatus}
+        ></TextInput>
+        <TouchableOpacity onPress={handleEditStatus}>
+            <Text>Update</Text>
+        </TouchableOpacity>
         </View>
 
         </View>

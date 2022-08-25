@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native";
 import { View, Text, Image, StyleSheet } from "react-native"
 
 
-function ChatListItem({chat, contact, user, handlePressOpenChat, chatUser, createNewConversation }) {
+function ChatListItem({chat, contact, user, handlePressOpenChat, chatUser, createNewConversation, handleOpenEditBio }) {
     console.log(chatUser)
 
     const subtitle = () => {
@@ -57,6 +57,9 @@ function ChatListItem({chat, contact, user, handlePressOpenChat, chatUser, creat
         if (chat) {
             handlePressOpenChat()
         }
+        if (user) {
+            handleOpenEditBio()
+        }
     }
 
 
@@ -68,8 +71,10 @@ function ChatListItem({chat, contact, user, handlePressOpenChat, chatUser, creat
         disabled={!!chatUser}>
             <Image source={{uri: "https://media.istockphoto.com/photos/close-up-portrait-of-a-shiba-inu-dog-selective-focus-dog-nose-picture-id1391025385?k=20&m=1391025385&s=612x612&w=0&h=G22D7kWgVGCOn-wv0-tJAxoI5bylZSXIOhslCaYiiVQ="}} style={{height: 40, width: 40, borderRadius: 100}}/>
             <View style={{paddingLeft: 10}}>
-            <Text>{name()}</Text>
-            <Text numberOfLines={1}>
+            <Text style={ChatListStyle.nameText}>{name()}</Text>
+            <Text 
+            style={ChatListStyle.subtitleText}
+            numberOfLines={1}>
                 {subtitle()} 
             </Text>
             </View>
@@ -109,6 +114,13 @@ const ChatListStyle = StyleSheet.create({
     },
     badgeText: {
         color: "white"
+    },
+    nameText: {
+        fontWeight: "bold",
+        fontSize: 16
+    },
+    subtitleText: {
+        color: "grey"
     }
 
 })

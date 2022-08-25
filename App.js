@@ -10,15 +10,15 @@ import Settings from './Settings';
 import Chats from './Chats';
 import LoginSignup from './LoginSignup';
 
-import {
-  ActionCable,
-  Cable,
-} from '@kesha-antonov/react-native-action-cable'
+// import {
+//   ActionCable,
+//   Cable,
+// } from '@kesha-antonov/react-native-action-cable'
 
 
-const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
+// const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
-console.log('!!! cable', actionCable);
+// console.log('!!! cable', actionCable);
 
 // const cable = new Cable({})
 
@@ -132,7 +132,7 @@ function App() {
   }
 
   function SettingsComponent() {
-    return <Settings user={user} />
+    return <Settings user={user} setUser={setUser} token={token} setToken={setToken}/>
   }
 
   function ContactsComponent() {
