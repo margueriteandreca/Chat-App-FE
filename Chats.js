@@ -6,22 +6,54 @@ import ChatListItem from "./ChatListItem";
 import ChatRoom from "./ChatRoom";
 import FilterChats from "./FilterChats";
 
-function Chats() {
+import {
+  ActionCable,
+  Cable,
+} from '@kesha-antonov/react-native-action-cable'
+
+
+const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
+
+console.log('!!! cable', actionCable);
+
+const cable = new Cable({})
+
+function Chats({user, token}) {
     const [search, setSearch] = useState("")
     const [chats, setChats] = useState([])
-    const [isDisplayingChat, setisDisplayingChat] = useState(false)
- 
+    const [currentChat, setCurrentChat] = useState();
+    const [isDisplayingChat, setIsDisplayingChat] = useState(false)
+    const [messages, setMessages] = useState([])
 
+    //// fetch user messages 
+
+    function handlePressOpenChat(chat) {
+        setCurrentChat(chat)
+        setIsDisplayingChat(true)
+    }
+
+
+ 
     useEffect(() => {
-        fetch("http://localhost:3000/conversations")
+        fetch("http://localhost:3000/userconversations", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              method: "POST",
+              body: JSON.stringify({token})
+        })
         .then(res => res.json())
-        .then(data => setChats(data))
+        .then(data => {
+            console.log("!!!!!!!! chats", data)
+            setChats(data)
+        })
      }, [])
 
 
-    const filteredChats = chats.filter(chat => chat.name.toLowerCase().includes(search.toLowerCase()) 
+    const filteredChats = chats.filter(chat => chat.name.toLowerCase().includes(search.toLowerCase()) )
     // || chat.users.map(user => `${user.first_name} ${user.last_name}`).toLowerCase().includes(search.toLowerCase())
-    )
+    
 
 
 
@@ -29,10 +61,12 @@ function Chats() {
     return (
       <><View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         <FilterChats search={search} setSearch={setSearch} filteredChats={filteredChats}/>
-        {filteredChats.map(chat => <ChatListItem chat={chat}/>)}
+        {filteredChats.map(chat => <ChatListItem 
+        chat={chat} 
+        handlePressOpenChat={() => handlePressOpenChat(chat)} />)}
         
       </View>
-      {isDisplayingChat ? <ChatRoom /> : null }
+      {isDisplayingChat ? <ChatRoom setIsDisplayingChat={setIsDisplayingChat} myUserId={user.id} chat={currentChat}/> : null }
       </>
     );
   }

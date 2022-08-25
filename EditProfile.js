@@ -3,11 +3,34 @@ import { useState, useEffect } from "react";
 import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import ChatListItem from './ChatListItem';
 
-function EditProfile() {
+function EditProfile({user}) {
+
+    // useEffect(() => {
+    //     fetch("http://localhost:3000/myprofile", 
+    //         {
+    //           headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //           },
+    //           method: "POST",
+    //           body: JSON.stringify({token})
+    //       }) 
+    //         .then(res => res.json())
+    //         .then(data => {
+    //           console.log(data)
+    //           setUser(data)
+    //           setToken(token);
+    //         })
+    //         setIsLoggedIn(true)
+          
+    //   }, [])
+    
+    console.log(user)
+
     return (
         <View style={profileStyles.profileContainer}>
         <View style={profileStyles.profileCardContainer}>
-        <ChatListItem />
+        <ChatListItem user={user}/>
 
         <View style={profileStyles.statusContainer}>
         <Text style={profileStyles.inputlabel}>Edit Status</Text>

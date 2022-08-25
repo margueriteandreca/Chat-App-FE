@@ -5,9 +5,29 @@ import { View, Text, Image, StyleSheet, TextInput, KeyboardAvoidingView, Platfor
 import Message from "./Message";
 
 
-function ChatKeyboard() {
+function ChatKeyboard({myUserId, chat}) {
 
     const [message, setMessage] = useState("")
+
+    const handleSendMessage = () => {
+        fetch("http://localhost:3000/messages", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              method: "POST",
+              body: JSON.stringify({message_content: message, user_id: myUserId, conversation_id: chat.id})
+              //maybe change to token?????
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+
+        console.log('!!! sending: ', message)
+        setMessage("")
+        // post message
+    }
 
 
     return (
@@ -17,12 +37,13 @@ function ChatKeyboard() {
         keyboardVerticalOffset={100}>
             <View style={keyboardStyles.inputContainer}>
                 <TextInput style={keyboardStyles.input} 
-                value={message} onChangeText={setMessage}/>
+                value={message} onChangeText={setMessage}
+                />
             </View>
 
-            <View style={keyboardStyles.buttonContainer}>
+            <TouchableOpacity style={keyboardStyles.buttonContainer} onPress={handleSendMessage}>
                 <Text styles={keyboardStyles.buttonText}>+</Text>
-            </View>
+            </TouchableOpacity>
         </KeyboardAvoidingView>
 
     )
@@ -46,6 +67,7 @@ const keyboardStyles = StyleSheet.create({
 
     }, 
     input: {
+        width: "100%"
 
     },
     buttonContainer: {

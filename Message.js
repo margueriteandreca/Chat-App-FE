@@ -3,8 +3,7 @@ import { useState, useEffect } from "react"
 import { TouchableOpacity } from "react-native";
 import { View, Text, Image, StyleSheet } from "react-native"
 
-function Message({message}) {
-    const [isMe, setIsMe] = useState(false)
+function Message({ message, isMe }) {
     return (
         <View style={[
             messageStyles.container, {
@@ -13,7 +12,7 @@ function Message({message}) {
                 marginRight: isMe ? 10 : "auto"
                 }]}>
             <Text style={{color: isMe ? "black" : "white"}}>
-                My Chat
+                {message}
             </Text>
         </View>
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import { Image, Text, View, TextInput, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, Navigate } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -10,7 +10,17 @@ import Settings from './Settings';
 import Chats from './Chats';
 import LoginSignup from './LoginSignup';
 
+import {
+  ActionCable,
+  Cable,
+} from '@kesha-antonov/react-native-action-cable'
 
+
+const actionCable = ActionCable.createConsumer("ws://localhost:3000/cable");
+
+console.log('!!! cable', actionCable);
+
+// const cable = new Cable({})
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +39,7 @@ const getLogin = async (setToken) => {
       setToken(token)
     }
   } catch(e) {
-    console.log('!!! error', e)
+    console.log('ASYNC STORAGE ERROR', e)
     // error reading value
   }
 }
@@ -63,10 +73,13 @@ function App() {
         .then(res => res.json())
         .then(data => {
           console.log(data)
-          setUser(data.user)
+          setUser(data)
           setToken(token);
         })
         setIsLoggedIn(true)
+      }
+      else {
+        setIsLoggedIn(false)
       }
   }, [token])
 
@@ -110,16 +123,30 @@ function App() {
   }
 
 
+  console.log(user)
+  console.log(token)
 
+
+  function ChatsComponent({ navigation }) {
+    return <Chats token={token} user={user}/>
+  }
+
+  function SettingsComponent() {
+    return <Settings user={user} />
+  }
+
+  function ContactsComponent() {
+    return <Contacts token={token}/>
+  }
 
   return (
     <>
       {isLoggedIn ?
         <NavigationContainer>
           <Tab.Navigator screenOptions={screenOptions}>
-            <Tab.Screen name="Contacts" component={Contacts} />
-            <Tab.Screen name="Chats" component={Chats} />
-            <Tab.Screen name="Settings" component={Settings} user={user} />
+            <Tab.Screen name="Contacts" component={ContactsComponent} />
+            <Tab.Screen name="Chats" component={ChatsComponent} />
+            <Tab.Screen name="Settings" component={SettingsComponent} />
           </Tab.Navigator>
         </NavigationContainer> : 
         <LoginSignup 
