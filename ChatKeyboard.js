@@ -21,7 +21,7 @@ function ChatKeyboard({myUserId, chat}) {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            console.log(`message post: ${data}`)
         })
 
         console.log('!!! sending: ', message)

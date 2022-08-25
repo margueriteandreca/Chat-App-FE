@@ -14,14 +14,14 @@ function Contacts({token}) {
         })
     }, [])
 
-    function createNewConversation(id) {
-      fetch("http://localhost:3000/newchat", {
+    function createNewConversation(recipient_id) {
+      fetch("http://localhost:3000/conversations", {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
           method: "POST",
-          body: JSON.stringify({token})
+          body: JSON.stringify({recipient_id, token})
       })
       .then(res => res.json())
       .then(data => {
@@ -33,7 +33,7 @@ function Contacts({token}) {
 
     return (
       <View style={{ flex: 1, justifyContent: 'flexStart', alignItems: 'center' }}>
-        {contacts.map(contact => <ChatListItem key={contact.id} contact={contact} onPress={createNewConversation}/>)}
+        {contacts.map(contact => <ChatListItem key={contact.id} contact={contact} createNewConversation={createNewConversation}/>)}
       </View>
     );
   }

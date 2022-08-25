@@ -124,7 +124,7 @@ function App() {
 
 
   console.log(user)
-  console.log(token)
+  console.log("!!!!!!!!!!", token)
 
 
   function ChatsComponent({ navigation }) {
