@@ -11,14 +11,9 @@ function Login({handleLogin, setIsLogIn, username, setUser, setUsername, passwor
     }
 
     return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
 
-      <Image 
-      style={{width: 350, height: 175}}
-      source={require("./Photos/VORBA.png")}
-      />
 
-      
       {isLoading ? <ActivityIndicator size="large" color="#3777f0" /> :
       <>
       <Text>Log In</Text>

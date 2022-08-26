@@ -78,30 +78,33 @@ const profileStyles = StyleSheet.create({
         height: "100%",
         position: "absolute",
         backgroundColor: "whitesmoke",
-        justifyContent: "space-evenly",
+        justifyContent: "flex-start",
         alignItems: "center"
 
     },
     profileCardContainer: {
         display: "flex",
-        height: 300,
+        height: 320,
         width: "100%",
         backgroundColor: "white",
-        justifyContent: "space-evenly",
+        justifyContent: "flex-start",
         alignItems: "center"
 
     },
     statusContainer: {
         display: "flex",
-        // backgroundColor: "red",
-        width: 320
+        justifyContent: "center",
+        width: 320,
+        height: 200,
+        marginTop: 10
 
     },
     input: {
         backgroundColor: "whitesmoke",
         height: 50,
         width: "100%",
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop: 5
     },
     inputlabel: {
         paddingLeft: 5,
@@ -120,7 +123,8 @@ const profileStyles = StyleSheet.create({
         paddingLeft: 10,
         height: 50,
         width: "100%",
-        backgroundColor: "white"
+        backgroundColor: "white",
+        marginTop: 150
     },
     backButton: {
         color: "grey",
@@ -150,9 +154,10 @@ const profileStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#3777f0",
-        width: 100,
+        width: 320,
         height: 40,
-        borderRadius: 5
+        borderRadius: 5,
+        marginTop: 20
     },
     updateButtonText: {
         color: "white"

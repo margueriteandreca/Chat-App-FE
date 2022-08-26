@@ -11,7 +11,7 @@ function Message({ message, isMe }) {
                 marginLeft: isMe ? "auto" : 10,
                 marginRight: isMe ? 10 : "auto"
                 }]}>
-            <Text style={{color: isMe ? "black" : "white"}}>
+            <Text style={{color: isMe ? "white" : "black"}}>
                 {message}
             </Text>
         </View>

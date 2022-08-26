@@ -41,7 +41,7 @@ function ChatKeyboard({ myUserId, chat, refreshChats }) {
             </View>
 
             <TouchableOpacity style={keyboardStyles.buttonContainer} onPress={handleSendMessage}>
-                <Text styles={keyboardStyles.buttonText}>+</Text>
+                <Image style={keyboardStyles.buttonImage} source={require("./Icons/send.png")}/>
             </TouchableOpacity>
         </KeyboardAvoidingView>
 
@@ -56,7 +56,7 @@ const keyboardStyles = StyleSheet.create({
 
     },
     inputContainer: {
-        backgroundColor: "lightgrey",
+        backgroundColor: "whitesmoke",
         flex: 1,
         marginRight: 10, 
         borderRadius: 25,
@@ -77,9 +77,10 @@ const keyboardStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    buttonText: {
-        color: "white",
-        fontSize: 35
+    buttonImage: {
+        marginLeft: 2,
+        width: 25,
+        height: 25
     }
 })
 

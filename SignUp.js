@@ -39,7 +39,7 @@ function SignUp({setIsLogIn, setIsLoggedIn}) {
     
 
     return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
       <Text>Sign up for Vorba</Text>
 
       <View style={styles.names}> 

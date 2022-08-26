@@ -97,7 +97,8 @@ const chatRoomStyles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "white",
-        flex: 1
+        flex: 1,
+        paddingBottom: 5
     },
     backButton: {
         color: "grey",

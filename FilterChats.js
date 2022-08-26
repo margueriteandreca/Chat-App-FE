@@ -32,7 +32,9 @@ const searchBarStyles = {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        borderBottomColor: "transparent",
+        borderTopColor: "transparent"
     },
     inner: {
         backgroundColor: "#d6d6d6",
