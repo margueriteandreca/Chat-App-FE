@@ -5,8 +5,7 @@ import { View, Text, Image, StyleSheet, TextInput, KeyboardAvoidingView, Platfor
 import Message from "./Message";
 
 
-function ChatKeyboard({myUserId, chat}) {
-
+function ChatKeyboard({ myUserId, chat, refreshChats }) {
     const [message, setMessage] = useState("")
 
     const handleSendMessage = () => {
@@ -22,9 +21,9 @@ function ChatKeyboard({myUserId, chat}) {
         .then(res => res.json())
         .then(data => {
             console.log(`message post: ${data}`)
+            refreshChats();
         })
 
-        console.log('!!! sending: ', message)
         setMessage("")
         // post message
     }

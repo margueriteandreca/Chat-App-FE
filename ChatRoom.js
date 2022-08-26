@@ -15,8 +15,12 @@ const cable = new Cable({})
 
 //////////////////////////////////////////////////////////
 
-function ChatRoom({ myUserId, setIsDisplayingChat, chat } ) {
+function ChatRoom({ myUserId, setIsDisplayingChat, chat, refreshChats } ) {
     const [messages, setMessages] = useState(chat.messages)
+
+    useEffect(() => {
+        setMessages(chat.messages)
+    }, [chat.messages])
 
 
     const handleBackToChats = () => {
@@ -78,7 +82,7 @@ function ChatRoom({ myUserId, setIsDisplayingChat, chat } ) {
             data={messages}
             renderItem={({item}) => <Message message={item.message_content} isMe={myUserId === item.user_id}/>}/>
 
-            <ChatKeyboard myUserId={myUserId} chat={chat}/>
+            <ChatKeyboard myUserId={myUserId} chat={chat} refreshChats={refreshChats}/>
             
         
         {/* <ChatChannel /> */}

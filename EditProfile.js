@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import ChatListItem from './ChatListItem';
 
-function EditProfile({user}) {
+function EditProfile({user, setIsEditProfile}) {
     const [status, setStatus] = useState("")
 
     const handleEditStatus = () => {
@@ -17,14 +17,31 @@ function EditProfile({user}) {
         })
         .then(res => res.json())
         .then(data => console.log("STATUS UPDATE", data))
+        setIsEditProfile(false)
       }
 
-      console.log("status????????", status)
+
+    const handleBackToSettings = () => {
+        setIsEditProfile(false)
+    }
+
+      
 
     return (
         <View style={profileStyles.profileContainer}>
         <View style={profileStyles.profileCardContainer}>
+        <View style={profileStyles.header}>
+        <TouchableOpacity 
+                style={profileStyles.backButtonContainer}
+                onPress={handleBackToSettings}>
+                    <Text style={profileStyles.backButton}>
+                    {`<`}
+                    </Text>
+        </TouchableOpacity>
+    
         <ChatListItem user={user}/>
+
+        </View>
 
         <View style={profileStyles.statusContainer}>
             <Text style={profileStyles.inputlabel}>
@@ -34,8 +51,11 @@ function EditProfile({user}) {
         style={profileStyles.input}
         onChangeText={setStatus}
         ></TextInput>
-        <TouchableOpacity onPress={handleEditStatus}>
-            <Text>Update</Text>
+
+        <TouchableOpacity 
+        onPress={handleEditStatus}
+        style={profileStyles.updateButton}>
+            <Text style={profileStyles.updateButtonText}>Update</Text>
         </TouchableOpacity>
         </View>
 
@@ -101,6 +121,41 @@ const profileStyles = StyleSheet.create({
         height: 50,
         width: "100%",
         backgroundColor: "white"
+    },
+    backButton: {
+        color: "grey",
+        fontSize: "24",
+
+    },
+    backButtonContainer: {
+        width: 50,
+        height: 70,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderBottomColor: '#bfbfbf',
+        borderBottomWidth: 1
+        
+    },
+    header: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingLeft: 30
+        
+
+    },
+    updateButton: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#3777f0",
+        width: 100,
+        height: 40,
+        borderRadius: 5
+    },
+    updateButtonText: {
+        color: "white"
     }
     
     

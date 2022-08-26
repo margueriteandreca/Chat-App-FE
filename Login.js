@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useState, useEffect} from "react"
 
-function Login({handleLogin, setIsLogIn, username, setUser, setUsername, password, setPassword, token, setToken}) {
+
+function Login({handleLogin, setIsLogIn, username, setUser, setUsername, password, setPassword, token, setToken, isLoading}) {
 
 
     const handleOpenSignUp = () => {
@@ -11,8 +12,17 @@ function Login({handleLogin, setIsLogIn, username, setUser, setUsername, passwor
 
     return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Log In To Vorba</Text>
+
+      <Image 
+      style={{width: 350, height: 175}}
+      source={require("./Photos/VORBA.png")}
+      />
+
       
+      {isLoading ? <ActivityIndicator size="large" color="#3777f0" /> :
+      <>
+      <Text>Log In</Text>
+
       <TextInput
         style={styles.input}
         onChangeText={setUsername}
@@ -40,6 +50,11 @@ function Login({handleLogin, setIsLogIn, username, setUser, setUsername, passwor
           <Text style={styles.clickToSignUp}>Sign up</Text>
         </TouchableOpacity>
         </View>
+        </>
+      
+      
+      }
+      
     </View>
     )
 

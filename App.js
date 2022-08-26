@@ -28,15 +28,17 @@ const storeLogin = async (token) => {
   try {
     await AsyncStorage.setItem("@token", token)
   } catch (e) {
-    console.log("this didn't work")
+    console.log("ASYNC STORAGE SET ERROR", e)
   }
 }
 
-const getLogin = async (setToken) => {
+const getLogin = async (setToken, setIsLoading) => {
   try {
     const token = await AsyncStorage.getItem("@token")
     if(token !== null) {
       setToken(token)
+    } else {
+      setIsLoading(false)
     }
   } catch(e) {
     console.log('ASYNC STORAGE ERROR', e)
@@ -55,8 +57,10 @@ function App() {
   const [password, setPassword] = useState(null);
   const [token, setToken] = useState("")
 
+  const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
-    getLogin(setToken);
+    getLogin(setToken, setIsLoading);
   }, [])
 
   useEffect(() => {
@@ -75,8 +79,8 @@ function App() {
           console.log(data)
           setUser(data)
           setToken(token);
+          setIsLoggedIn(true)
         })
-        setIsLoggedIn(true)
       }
       else {
         setIsLoggedIn(false)
@@ -87,11 +91,11 @@ function App() {
     tabBarIcon: ({ focused, color, size }) => {
       switch (route.name) {
         case "Contacts": 
-          return (<Image source={require("./Icons/contact-book.png")} style={{ height: 25, width: 25}}/>)
+          return (<Image source={ focused ? require("./Icons/contact-book.png") : require("./Icons/contact-book-2.png")} style={{ height: 25, width: 25}}/>)
         case "Chats": 
-          return (<Image source={require("./Icons/bubble-chat.png")} style={{ height: 25, width: 25}}/>)
+          return (<Image source={ focused ? require("./Icons/bubble-chat.png") : require("./Icons/bubble-chat-2.png")} style={{ height: 25, width: 25}}/>)
         case "Settings": 
-          return (<Image source={require("./Icons/gear.png")} style={{ height: 25, width: 25}}/>)
+          return (<Image source={focused ? require("./Icons/gear.png") : require("./Icons/gear-2.png")} style={{ height: 25, width: 25}}/>)
         default: 
           return (<Image />)
       } 
@@ -127,16 +131,16 @@ function App() {
   console.log("!!!!!!!!!!", token)
 
 
-  function ChatsComponent({ navigation }) {
-    return <Chats token={token} user={user}/>
+  function ChatsComponent({ navigation, route }) {
+    return <Chats token={token} user={user} route={route} navigation={navigation} />
   }
 
   function SettingsComponent() {
-    return <Settings user={user} setUser={setUser} token={token} setToken={setToken}/>
+    return <Settings user={user} setUser={setUser} token={token} setToken={setToken} storeLogin={storeLogin} setIsLoading={setIsLoading}/>
   }
 
   function ContactsComponent() {
-    return <Contacts token={token}/>
+    return <Contacts token={token} user={user}/>
   }
 
   return (
@@ -159,6 +163,7 @@ function App() {
           token={token} 
           setToken={setToken}
           setIsLoggedIn={setIsLoggedIn}
+          isLoading={isLoading}
         />
       }
     </>

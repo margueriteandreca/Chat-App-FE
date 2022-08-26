@@ -3,8 +3,17 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native"
 import ChatListItem from "./ChatListItem";
 import { useState } from "react";
 import EditProfile from "./EditProfile";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function Settings({user, setUser, token, setToken}) {
+const removeToken = () => {
+    try {
+        AsyncStorage.removeItem('@token')
+    } catch (e) {
+        console.log('ASYNC STORAGE REMOVE ERROR: ', e)
+    }
+}
+
+function Settings({user, setUser, token, setToken, setIsLoading}) {
     const [isEditProfile, setIsEditProfile] = useState(false)
 
     const handleOpenEditBio = () => {
@@ -14,6 +23,22 @@ function Settings({user, setUser, token, setToken}) {
     const handleLogout = () => {
         setUser(null)
         setToken(null)
+        removeToken()
+        setIsLoading(false)
+
+    }
+
+    const clearChats = () => {
+        fetch(`http://localhost:3000/conversations/${user.id}`, {
+            method: "DELETE",
+            headers: {
+                'Content-type': 'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
 
     }
 
@@ -21,7 +46,7 @@ function Settings({user, setUser, token, setToken}) {
       <View style={{ flex: 1, justifyContent: "flex-start", alignItems: 'center' }}>
         <ChatListItem user={user} handleOpenEditBio={handleOpenEditBio} />
         
-        <TouchableOpacity style={styles.clearChatContainer} onPress={handleLogout}>
+        <TouchableOpacity style={styles.clearChatContainer} onPress={clearChats}>
             <Text style={styles.clearChatText}>
                 Clear All Chats 
             </Text>
@@ -34,7 +59,7 @@ function Settings({user, setUser, token, setToken}) {
             </Text>
         </TouchableOpacity>
 
-        {isEditProfile ? <EditProfile user={user}/> : null}
+        {isEditProfile ? <EditProfile user={user} setIsEditProfile={setIsEditProfile}/> : null}
 
         
       </View>
